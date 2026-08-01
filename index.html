@@ -4,18 +4,34 @@
 <head>
 
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>☂️ ixxy VPN</title>
 
+<link rel="stylesheet" href="style.css">
+
 <link rel="manifest" href="manifest.json">
 
-<link rel="stylesheet" href="style.css">
+<meta name="theme-color" content="#020617">
 
 </head>
 
 
 <body>
+
+
+<div id="loader">
+
+<div class="loader-logo">
+☂️
+</div>
+
+<h2>ixxy VPN</h2>
+
+</div>
+
+
 
 
 <div class="app">
@@ -39,9 +55,10 @@
 <h2>👤 Профиль</h2>
 
 
-<input 
+<input
 id="userId"
-placeholder="Telegram ID">
+placeholder="Telegram ID"
+type="number">
 
 
 <button onclick="loadUser()">
@@ -50,6 +67,8 @@ placeholder="Telegram ID">
 
 
 </div>
+
+
 
 
 
@@ -64,44 +83,6 @@ placeholder="Telegram ID">
 ⚪ Нет данных
 
 </div>
-
-
-</div>
-
-
-
-
-<div class="card">
-
-
-<h2>Действия</h2>
-
-
-
-<button 
-class="connect"
-onclick="connect()">
-
-🚀 Подключиться
-
-</button>
-
-
-
-<button onclick="copySub()">
-
-📋 Скопировать подписку
-
-</button>
-
-
-
-<button onclick="renew()">
-
-💳 Продлить
-
-</button>
-
 
 
 </div>
@@ -127,12 +108,87 @@ onclick="connect()">
 
 
 
-<footer>
-☂️ ixxy VPN
-</footer>
+
+
+<div class="card">
+
+
+<h2>⚡ Управление</h2>
+
+
+<button 
+class="connect"
+onclick="connect()">
+
+🚀 Подключиться
+
+</button>
+
+
+
+<button onclick="copySub()">
+
+📋 Скопировать подписку
+
+</button>
+
+
+
+<button onclick="showQR()">
+
+📱 QR-код
+
+</button>
+
+
+
+<button onclick="renew()">
+
+💳 Продлить подписку
+
+</button>
+
 
 
 </div>
+
+
+
+
+
+<footer>
+
+☂️ ixxy VPN
+
+</footer>
+
+
+
+</div>
+
+
+
+
+
+<div id="qrBox">
+
+
+<h3>
+📱 QR подписки
+</h3>
+
+
+<img id="qr">
+
+
+<button onclick="closeQR()">
+Закрыть
+</button>
+
+
+</div>
+
+
 
 
 
