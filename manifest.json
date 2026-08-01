@@ -1,0 +1,22 @@
+{
+  "name": "☂️ ixxy VPN",
+  "short_name": "ixxy VPN",
+
+  "start_url": "/",
+
+  "display": "standalone",
+
+  "background_color": "#020617",
+
+  "theme_color": "#020617",
+
+  "description": "Официальное приложение ixxy VPN",
+
+  "icons": [
+    {
+      "src": "assets/logo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
