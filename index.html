@@ -1,73 +1,121 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>☂️ ixxy VPN</title>
 
 <link rel="stylesheet" href="style.css">
+
 </head>
+
 
 <body>
 
+
 <div class="app">
 
-    <div class="logo">
-        ☂️
-    </div>
 
-    <h1>ixxy VPN</h1>
-    <p class="subtitle">Быстрый и безопасный интернет</p>
+<div class="logo">
+☂️
+</div>
 
 
-    <div class="card">
+<h1>ixxy VPN</h1>
 
-        <h2>Статус</h2>
-
-        <div id="status" class="status">
-            ⚪ Не подключено
-        </div>
-
-    </div>
+<p class="subtitle">
+Быстрый и безопасный интернет
+</p>
 
 
-    <div class="card">
 
-        <h2>Ваша подписка</h2>
-
-        <input 
-        id="subLink"
-        placeholder="Вставьте ссылку подписки"
-        type="text">
+<div class="card">
 
 
-        <button onclick="saveSub()">
-            💾 Сохранить
-        </button>
+<h2>👤 Авторизация</h2>
 
 
-        <button onclick="connect()" class="main">
-            🚀 Подключиться
-        </button>
+<input 
+id="userId"
+placeholder="Введите Telegram ID"
+type="number">
 
 
-        <button onclick="copySub()">
-            📋 Скопировать ссылку
-        </button>
-
-    </div>
-
-
-    <div class="footer">
-        ☂️ ixxy VPN
-    </div>
+<button onclick="loadUser()">
+🔍 Загрузить подписку
+</button>
 
 
 </div>
 
 
+
+
+
+<div class="card">
+
+
+<h2>Статус</h2>
+
+
+<div id="status">
+
+⚪ Нет данных
+
+</div>
+
+
+</div>
+
+
+
+
+
+<div class="card">
+
+
+<h2>Управление</h2>
+
+
+<button 
+class="main"
+onclick="connect()">
+
+🚀 Подключиться
+
+</button>
+
+
+
+<button onclick="copySub()">
+
+📋 Скопировать ссылку
+
+</button>
+
+
+</div>
+
+
+
+
+<div class="footer">
+
+☂️ ixxy VPN
+
+</div>
+
+
+</div>
+
+
+
 <script src="script.js"></script>
 
+
 </body>
+
 </html>
