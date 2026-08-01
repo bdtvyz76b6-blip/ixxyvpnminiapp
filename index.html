@@ -8,6 +8,8 @@
 
 <title>☂️ ixxy VPN</title>
 
+<link rel="manifest" href="manifest.json">
+
 <link rel="stylesheet" href="style.css">
 
 </head>
@@ -26,7 +28,7 @@
 
 <h1>ixxy VPN</h1>
 
-<p class="subtitle">
+<p class="sub">
 Быстрый и безопасный интернет
 </p>
 
@@ -34,24 +36,20 @@
 
 <div class="card">
 
-
-<h2>👤 Авторизация</h2>
+<h2>👤 Профиль</h2>
 
 
 <input 
 id="userId"
-placeholder="Введите Telegram ID"
-type="number">
+placeholder="Telegram ID">
 
 
 <button onclick="loadUser()">
-🔍 Загрузить подписку
+🔍 Загрузить
 </button>
 
 
 </div>
-
-
 
 
 
@@ -73,15 +71,15 @@ type="number">
 
 
 
-
 <div class="card">
 
 
-<h2>Управление</h2>
+<h2>Действия</h2>
+
 
 
 <button 
-class="main"
+class="connect"
 onclick="connect()">
 
 🚀 Подключиться
@@ -92,21 +90,46 @@ onclick="connect()">
 
 <button onclick="copySub()">
 
-📋 Скопировать ссылку
+📋 Скопировать подписку
 
 </button>
 
 
+
+<button onclick="renew()">
+
+💳 Продлить
+
+</button>
+
+
+
 </div>
 
 
 
 
-<div class="footer">
 
+<div class="card">
+
+
+<h2>🌍 Серверы</h2>
+
+
+<div id="servers">
+
+Нет данных
+
+</div>
+
+
+</div>
+
+
+
+<footer>
 ☂️ ixxy VPN
-
-</div>
+</footer>
 
 
 </div>
