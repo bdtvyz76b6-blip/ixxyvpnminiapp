@@ -1,126 +1,277 @@
 let subLink = "";
 
+const GITHUB =
+"https://raw.githubusercontent.com/bdtvyz76b6-blip/vpn-sub/main/users/";
+
+
+window.onload = () => {
+
+    let saved =
+    localStorage.getItem("ixxy_id");
+
+
+    if(saved){
+
+        document.getElementById("userId").value = saved;
+
+        loadUser();
+
+    }
+
+};
+
+
+
 
 
 async function loadUser(){
 
 
-let id = 
-document.getElementById("userId").value;
+    let id =
+    document.getElementById("userId").value.trim();
 
 
 
-if(!id){
+    if(!id){
 
-alert("Введите Telegram ID");
+        alert("Введите Telegram ID");
 
-return;
+        return;
+
+    }
+
+
+
+    subLink =
+    GITHUB + id + ".txt";
+
+
+
+    try{
+
+
+        let response =
+        await fetch(subLink);
+
+
+
+        if(!response.ok){
+
+            throw new Error();
+
+        }
+
+
+
+        let text =
+        await response.text();
+
+
+
+        localStorage.setItem(
+            "ixxy_id",
+            id
+        );
+
+
+        localStorage.setItem(
+            "ixxy_sub",
+            subLink
+        );
+
+
+
+        let title =
+        getValue(
+            text,
+            "#profile-title"
+        );
+
+
+
+        let announce =
+        getValue(
+            text,
+            "#announce"
+        );
+
+
+
+        let servers =
+        text.match(/vless:\/\//g)
+        || [];
+
+
+
+        let serverNames =
+        getServers(text);
+
+
+
+        let expired =
+        text.includes("⛔");
+
+
+
+        document.getElementById("status").innerHTML = `
+
+
+        <span class="${expired ? "expired":"active"}">
+
+        ${expired ? "🔴 Подписка закончилась":"🟢 Подписка активна"}
+
+        </span>
+
+
+        <br><br>
+
+
+        👑 ${title}
+
+
+        <br>
+
+
+        📅 ${announce}
+
+
+        <br>
+
+
+        🌐 Серверов:
+        ${servers.length}
+
+
+        `;
+
+
+
+        if(serverNames.length){
+
+
+            document.getElementById("servers").innerHTML =
+            
+            serverNames.map(s =>
+
+            `
+            <div class="server">
+            🟢 ${s}
+            </div>
+            `
+
+            ).join("");
+
+        }
+
+
+
+
+    }
+
+
+    catch{
+
+
+        document.getElementById("status").innerHTML =
+
+        `
+        🔴 Пользователь не найден
+
+        <br><br>
+
+        Проверь Telegram ID
+
+        `;
+
+
+    }
+
 
 }
 
 
 
-subLink =
-"https://raw.githubusercontent.com/" +
-"bdtvyz76b6-blip/vpn-sub/main/users/" +
-id +
-".txt";
 
 
 
-try{
+
+function getValue(text,key){
 
 
-let response =
-await fetch(subLink);
+    let line =
+    text.split("\n")
+    .find(x=>x.startsWith(key));
 
 
-
-if(!response.ok){
-
-throw new Error();
-
-}
-
-
-
-let text =
-await response.text();
+    if(!line)
+    return "Не указано";
 
 
 
-let title =
-text.match(/#profile-title:(.*)/)?.[1]
-|| "ixxy VPN";
-
-
-
-let announce =
-text.match(/#announce:(.*)/)?.[1]
-|| "Нет данных";
-
-
-
-let servers =
-(text.match(/vless:\/\//g)||[]).length;
-
-
-
-document.getElementById("status").innerHTML = `
-
-🟢 Подписка найдена
-
-<br><br>
-
-👑 ${title}
-
-<br>
-
-📅 ${announce}
-
-<br>
-
-🌐 Серверов: ${servers}
-
-`;
-
-
-
-localStorage.setItem(
-"ixxy_id",
-id
-);
-
-
-
-localStorage.setItem(
-"ixxy_sub",
-subLink
-);
-
-
-
-}
-
-catch{
-
-
-document.getElementById("status").innerHTML =
-
-`
-🔴 Подписка не найдена
-
-<br><br>
-
-Проверь ID
-
-`;
+    return line
+    .replace(key,"")
+    .trim();
 
 }
 
 
 
+
+
+
+
+function getServers(text){
+
+
+    let lines =
+    text.split("\n");
+
+
+
+    let result=[];
+
+
+
+    for(let line of lines){
+
+
+        if(line.startsWith("vless://")){
+
+
+            let hash =
+            line.split("#")[1];
+
+
+
+            if(hash){
+
+                result.push(hash);
+
+            }
+
+            else{
+
+                result.push(
+                "Сервер"
+                );
+
+            }
+
+
+        }
+
+
+    }
+
+
+
+    return result;
+
+
 }
+
+
+
 
 
 
@@ -129,37 +280,41 @@ document.getElementById("status").innerHTML =
 function connect(){
 
 
+    if(!subLink){
 
-if(!subLink){
+        subLink =
+        localStorage.getItem("ixxy_sub");
 
-subLink =
-localStorage.getItem("ixxy_sub");
+    }
+
+
+
+    if(!subLink){
+
+        alert(
+        "Сначала загрузите подписку"
+        );
+
+        return;
+
+    }
+
+
+
+    location.href =
+
+    "happ://add/sub?url="
+
+    +
+
+    encodeURIComponent(subLink);
+
+
 
 }
 
 
 
-if(!subLink){
-
-alert("Сначала загрузите подписку");
-
-return;
-
-}
-
-
-
-window.location.href =
-
-"happ://add/sub?url="
-
-+
-
-encodeURIComponent(subLink);
-
-
-
-}
 
 
 
@@ -168,24 +323,43 @@ encodeURIComponent(subLink);
 function copySub(){
 
 
-if(!subLink){
+    if(!subLink){
 
-subLink =
-localStorage.getItem("ixxy_sub");
+        subLink =
+        localStorage.getItem("ixxy_sub");
+
+    }
+
+
+
+    if(subLink){
+
+
+        navigator.clipboard.writeText(subLink);
+
+
+        alert(
+        "Ссылка скопирована"
+        );
+
+
+    }
+
 
 }
 
 
 
-if(subLink){
 
 
-navigator.clipboard.writeText(subLink);
 
 
-alert("Ссылка скопирована");
+
+function renew(){
 
 
-}
+    location.href =
+    "https://t.me/orelvpntopbot";
+
 
 }
