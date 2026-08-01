@@ -1,84 +1,191 @@
-let sub = localStorage.getItem("ixxy_sub");
-
-
-window.onload = () => {
-
-    if(sub){
-
-        document.getElementById("subLink").value=sub;
-
-        document.getElementById("status").innerHTML =
-        "🟢 Подписка сохранена";
-
-    }
-
-};
+let subLink = "";
 
 
 
-function saveSub(){
-
-    let link =
-    document.getElementById("subLink").value;
+async function loadUser(){
 
 
-    if(!link){
-
-        alert("Вставьте ссылку");
-
-        return;
-
-    }
+let id = 
+document.getElementById("userId").value;
 
 
-    localStorage.setItem(
-        "ixxy_sub",
-        link
-    );
 
+if(!id){
 
-    document.getElementById("status").innerHTML =
-    "🟢 Подписка сохранена";
+alert("Введите Telegram ID");
+
+return;
 
 }
+
+
+
+subLink =
+"https://raw.githubusercontent.com/" +
+"bdtvyz76b6-blip/vpn-sub/main/users/" +
+id +
+".txt";
+
+
+
+try{
+
+
+let response =
+await fetch(subLink);
+
+
+
+if(!response.ok){
+
+throw new Error();
+
+}
+
+
+
+let text =
+await response.text();
+
+
+
+let title =
+text.match(/#profile-title:(.*)/)?.[1]
+|| "ixxy VPN";
+
+
+
+let announce =
+text.match(/#announce:(.*)/)?.[1]
+|| "Нет данных";
+
+
+
+let servers =
+(text.match(/vless:\/\//g)||[]).length;
+
+
+
+document.getElementById("status").innerHTML = `
+
+🟢 Подписка найдена
+
+<br><br>
+
+👑 ${title}
+
+<br>
+
+📅 ${announce}
+
+<br>
+
+🌐 Серверов: ${servers}
+
+`;
+
+
+
+localStorage.setItem(
+"ixxy_id",
+id
+);
+
+
+
+localStorage.setItem(
+"ixxy_sub",
+subLink
+);
+
+
+
+}
+
+catch{
+
+
+document.getElementById("status").innerHTML =
+
+`
+🔴 Подписка не найдена
+
+<br><br>
+
+Проверь ID
+
+`;
+
+}
+
+
+
+}
+
+
 
 
 
 function connect(){
 
-    let link =
-    localStorage.getItem("ixxy_sub");
 
 
-    if(!link){
+if(!subLink){
 
-        alert("Сначала сохраните подписку");
-
-        return;
-
-    }
-
-
-    window.location.href =
-    "happ://add/sub?url=" 
-    + encodeURIComponent(link);
+subLink =
+localStorage.getItem("ixxy_sub");
 
 }
 
 
 
+if(!subLink){
+
+alert("Сначала загрузите подписку");
+
+return;
+
+}
+
+
+
+window.location.href =
+
+"happ://add/sub?url="
+
++
+
+encodeURIComponent(subLink);
+
+
+
+}
+
+
+
+
+
 function copySub(){
 
-    let link =
-    localStorage.getItem("ixxy_sub");
+
+if(!subLink){
+
+subLink =
+localStorage.getItem("ixxy_sub");
+
+}
 
 
-    if(link){
 
-        navigator.clipboard.writeText(link);
+if(subLink){
 
-        alert("Ссылка скопирована");
 
-    }
+navigator.clipboard.writeText(subLink);
+
+
+alert("Ссылка скопирована");
+
+
+}
 
 }
